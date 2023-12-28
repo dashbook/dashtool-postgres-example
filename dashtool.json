@@ -1,0 +1,14 @@
+{
+  "catalogUrl": "postgres://postgres:postgres@localhost:5432",
+  "awsRegion": "us-east-1",
+  "awsAccessKeyId": "AKIA26G4PHALXW5CSL7H",
+  "bucket": "example-postgres",
+  "secrets": {
+    "postgres-secret": {
+      "password": "POSTGRES_PASSWORD"
+    },
+    "aws-secret": {
+      "secret_access_key": "SECRET_ACCESS_KEY"
+    }
+  }
+}
