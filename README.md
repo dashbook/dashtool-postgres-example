@@ -1,10 +1,13 @@
 
 # Dashtool example with Postgres
 
-## Prerequisits
+## Prerequisites
 
 - docker
+- kind
 - kubectl
+- AWS S3 bucket
+- dashtool
 
 ## Install and start Kind cluster
 
@@ -21,6 +24,8 @@ EOF
 ```
 
 ## Install Argo
+
+- wait until argo is installed
 
 ```shell
 kubectl create namespace argo
@@ -61,6 +66,8 @@ export AWS_SECRET_ACCESS_KEY=<SECRET_ACCESS_KEY>
 
 ## Start Postgres
 
+- wait until postgres container is running
+
 ```shell
 kubectl apply -f postgres.yaml
 ```
@@ -69,6 +76,12 @@ kubectl apply -f postgres.yaml
 
 ```shell
 kubectl apply -f role.yaml
+```
+
+# Load operational data
+
+```
+git checkout inventory
 ```
 
 ## Dashtool build
