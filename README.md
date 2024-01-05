@@ -1,7 +1,8 @@
 
 # Dashtool example with Postgres
 
-## Prerequisites
+## Setup
+### Prerequisites
 
 - docker
 - kind
@@ -9,7 +10,7 @@
 - AWS S3 bucket
 - dashtool
 
-## Install and start Kind cluster
+### Install and start Kind cluster
 
 ```shell
 cat <<EOF | kind create cluster --config=-
@@ -23,7 +24,7 @@ nodes:
 EOF
 ```
 
-## Install Argo
+### Install Argo
 
 - wait until argo is installed
 
@@ -43,28 +44,28 @@ kubectl patch deployment \
 ]}]'
 ```
 
-### Port-Forwarding
+#### Port-Forwarding
 
 ```shell
 kubectl -n argo port-forward deployment/argo-server 2746:2746
 ```
 
-## Create Secrets
+### Create Secrets
 
-### Postgres
+#### Postgres
 
 ```shell
 kubectl create secret generic postgres-secret --from-literal=password=postgres
 ```
 
-### AWS
+#### AWS
 
 ```shell
 kubectl create secret generic aws-secret --from-literal=secret_access_key=<SECRET_ACCESS_KEY>
 export AWS_SECRET_ACCESS_KEY=<SECRET_ACCESS_KEY>
 ```
+### Start Postgres
 
-## Start Postgres
 
 - wait until postgres container is running
 
@@ -72,13 +73,13 @@ export AWS_SECRET_ACCESS_KEY=<SECRET_ACCESS_KEY>
 kubectl apply -f postgres.yaml
 ```
 
-## Grant permissons
+### Grant permissons
 
 ```shell
 kubectl apply -f role.yaml
 ```
 
-# Load operational data
+## Extract & Load (EL)
 
 ```
 git checkout inventory
