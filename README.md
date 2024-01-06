@@ -2,6 +2,7 @@
 # Dashtool example with Postgres
 
 ## Setup
+
 ### Prerequisites
 
 - docker
@@ -64,8 +65,8 @@ kubectl create secret generic postgres-secret --from-literal=password=postgres
 kubectl create secret generic aws-secret --from-literal=secret_access_key=<SECRET_ACCESS_KEY>
 export AWS_SECRET_ACCESS_KEY=<SECRET_ACCESS_KEY>
 ```
-### Start Postgres
 
+### Start Postgres
 
 - wait until postgres container is running
 
@@ -81,29 +82,75 @@ kubectl apply -f role.yaml
 
 ## Extract & Load (EL)
 
-```
-git checkout inventory
+```shell
+git checkout bronze
 ```
 
-## Dashtool build
+### Dashtool build
 
 ```shell
 dashtool -p sql build
 ```
 
-## Dashtool workflow
+### Dashtool workflow
 
 ```shell
 dashtool -p sql workflow
 ```
 
-## Create config_maps
+### Create config_maps
+
 ```shell
 kubectl apply -f argo/config_maps.yaml
 ```
 
-## Create argo workflow
+### Create argo workflow
 
 ```shell
 argo cron create argo/workflow.yaml
+```
+
+### Merge changes into main
+
+```shell
+git checkout main
+git merge bronze
+```
+
+## Transform (T)
+
+```shell
+git checkout silver
+```
+
+### Dashtool build
+
+```shell
+dashtool -p sql build
+```
+
+### Dashtool workflow
+
+```shell
+dashtool -p sql workflow
+```
+
+### Create config_maps
+
+```shell
+kubectl apply -f argo/config_maps.yaml
+```
+
+### Create argo workflow
+
+```shell
+argo cron delete dashtool
+argo cron create argo/workflow.yaml
+```
+
+### Merge changes into main
+
+```shell
+git checkout main
+git merge silver
 ```
