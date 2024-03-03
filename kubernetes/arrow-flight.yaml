@@ -1,0 +1,96 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: arrow-flight
+data:
+  bucket: s3://example-postgres
+  tls-domain: arrow-flight
+  flight-user: flight_username
+  aws-access-key-id: AKIAIOSFODNN7EXAMPLE
+  aws-default-region: us-east-1
+  aws-endpoint: "http://localstack:4566"
+  current-databse: "gold"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arrow-flight
+spec:
+  selector:
+    matchLabels:
+      app: arrow-flight
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: arrow-flight
+    spec:
+      containers:
+        - name: arrow-flight
+          image: ghcr.io/dashbook/iceberg-datafusion-arrow-flight:sql
+          ports:
+            - containerPort: 31337
+          env:
+            - name: CATALOG_URL
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: catalog-url
+            - name: BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: arrow-flight
+                  key: bucket
+            - name: TLS_DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  name: arrow-flight
+                  key: tls-domain
+            - name: FLIGHT_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: arrow-flight
+                  key: flight-user
+            - name: FLIGHT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: arrow-flight-secret
+                  key: password
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: arrow-flight
+                  key: aws-access-key-id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: secret_access_key
+            - name: AWS_DEFAULT_REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: arrow-flight
+                  key: aws-default-region
+            - name: AWS_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: arrow-flight
+                  key: aws-endpoint
+            - name: CURRENT_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: arrow-flight
+                  key: current-database
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: arrow-flight
+spec:
+  selector:
+    app: arrow-flight
+  ports:
+    - name: arrow-flight
+      port: 31337
+      targetPort: 31337
+  type: ClusterIP

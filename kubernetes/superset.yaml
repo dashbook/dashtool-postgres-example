@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: superset
+spec:
+  selector:
+    matchLabels:
+      app: superset
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: superset
+    spec:
+      containers:
+        - name: superset
+          image: voltrondata/superset-sqlalchemy-adbc-flight-sql:latest
+          ports:
+            - name: superset
+              containerPort: 8088
+          env:
+            - name: SUPERSET_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: superset-secret
+                  key: admin-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: superset-svc
+spec:
+  selector:
+    app: superset
+  ports:
+    - name: superset
+      port: 8088
+      nodePort: 32088
+  type: NodePort

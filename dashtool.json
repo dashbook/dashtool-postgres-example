@@ -1,0 +1,21 @@
+{
+  "plugin": "sql",
+  "catalogUrl": "postgres://postgres:$POSTGRES_PASSWORD@localhost:5432",
+  "awsRegion": "us-east-1",
+  "awsAccessKeyId": "AKIAIOSFODNN7EXAMPLE",
+  "awsEndpoint": "http://localhost:4566",
+  "awsAllowHttp": "true",
+  "bucket": "s3://example-postgres",
+  "secrets": {
+    "postgres-secret": {
+      "password": "POSTGRES_PASSWORD"
+    },
+    "aws-secret": {
+      "secret_access_key": "AWS_SECRET_ACCESS_KEY"
+    }
+  },
+  "env": {
+    "CATALOG_URL": "postgres://postgres:$POSTGRES_PASSWORD@postgres:5432",
+    "AWS_ENDPOINT": "http://localstack:4566"
+  }
+}
