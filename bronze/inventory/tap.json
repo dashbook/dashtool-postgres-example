@@ -1,0 +1,9 @@
+{
+  "host": "postgres",
+  "port": 5432,
+  "user": "postgres",
+  "password": "$POSTGRES_PASSWORD",
+  "dbname": "postgres",
+  "filter_schemas": "inventory",
+  "default_replication_method": "LOG_BASED"
+}

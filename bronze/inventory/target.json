@@ -1,0 +1,16 @@
+{
+  "image": "ghcr.io/dashbook/pipelinewise-tap-postgres:sql",
+  "streams": {
+    "inventory-orders": { "identifier": "bronze.inventory.orders" },
+    "inventory-customers": { "identifier": "bronze.inventory.customers" },
+    "inventory-products": { "identifier": "bronze.inventory.products" }
+  },
+  "catalogName": "bronze",
+  "catalogUrl": "postgres://postgres:postgres@postgres:5432",
+  "awsRegion": "us-east-1",
+  "awsAccessKeyId": "AKIAIOSFODNN7EXAMPLE",
+  "awsSecretAccessKey": "$AWS_SECRET_ACCESS_KEY",
+  "awsEndpoint": "http://localstack:4566",
+  "awsAllowHttp": "true",
+  "bucket": "s3://example-postgres"
+}
