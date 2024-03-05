@@ -513,14 +513,8 @@ As a first step we have to add our Arrow Flight Server as a Database.
 4. Use "Flight SQL" as the "DISPLAY NAME".
 5. Enter the "SQLALCHEMY_URI":
 
-MacOs/Windows
 ```
-adbc_flight_sql://flight_username:flight_password@host.docker.internal:31337?disableCertificateVerification=True&useEncryption=True
-```
-
-Linux
-```
-adbc_flight_sql://flight_username:flight_password@172.17.0.1:31337?disableCertificateVerification=True&useEncryption=True
+adbc_flight_sql://flight_username:flight_password@arrow-flight:31337?disableCertificateVerification=True&useEncryption=True
 ```
 
 6. Click the "TEST CONNECTION" button to test if everything works as expected

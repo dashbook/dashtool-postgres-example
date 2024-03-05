@@ -9,6 +9,7 @@ data:
   aws-access-key-id: AKIAIOSFODNN7EXAMPLE
   aws-default-region: us-east-1
   aws-endpoint: "http://localstack:4566"
+  aws-allow-http: "TRUE"
   current-database: "gold"
 ---
 apiVersion: apps/v1
@@ -76,11 +77,18 @@ spec:
                 configMapKeyRef:
                   name: arrow-flight
                   key: aws-endpoint
+            - name: AWS_ALLOW_HTTP
+              valueFrom:
+                configMapKeyRef:
+                  name: arrow-flight
+                  key: aws-allow-http
             - name: CURRENT_DATABASE
               valueFrom:
                 configMapKeyRef:
                   name: arrow-flight
                   key: current-database
+            - name: RUST_LOG
+              value: info
 ---
 apiVersion: v1
 kind: Service
