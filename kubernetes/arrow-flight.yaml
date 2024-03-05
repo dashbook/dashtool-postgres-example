@@ -9,7 +9,7 @@ data:
   aws-access-key-id: AKIAIOSFODNN7EXAMPLE
   aws-default-region: us-east-1
   aws-endpoint: "http://localstack:4566"
-  current-databse: "gold"
+  current-database: "gold"
 ---
 apiVersion: apps/v1
 kind: Deployment
