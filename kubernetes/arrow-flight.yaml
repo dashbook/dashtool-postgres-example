@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: arrow-flight
 data:
-  bucket: s3://example-postgres
+  bucket: example-postgres
   tls-domain: arrow-flight
   flight-user: flight_username
   aws-access-key-id: AKIAIOSFODNN7EXAMPLE
